@@ -214,7 +214,7 @@ class DesiredJointPublisher():
         while rclpy.ok():
             start_time = time.time()
             msg = ros2_control_interfaces.msg.JointControl()
-            # msg.header.stamp = clock.now().to_msg()
+            msg.header.stamp = clock.now().to_msg()
 
             if delta > 0:
                 self.update(delta)
@@ -233,7 +233,7 @@ class DesiredJointPublisher():
             num_joints = (len(self.free_joints.items()) +
                           len(self.dependent_joints.items()))
             if has_position:
-                msg.desired_positions = num_joints * [0.0]
+                msg.goals = num_joints * [0.0]
                 # msg.position = num_joints * [0.0]
             # if has_velocity:
                 # msg.velocity = num_joints * [0.0]
@@ -241,7 +241,7 @@ class DesiredJointPublisher():
                 # msg.effort = num_joints * [0.0]
 
             for i, name in enumerate(self.joint_list):
-                msg.joint_names.append(str(name))
+                msg.joints.append(str(name))
                 joint = None
 
                 # Add Free Joint
@@ -270,14 +270,14 @@ class DesiredJointPublisher():
                     joint = self.free_joints[parent]
 
                 if has_position and 'position' in joint:
-                    msg.desired_positions[i] = float(joint['position']) * factor + offset
+                    msg.goals[i] = float(joint['position']) * factor + offset
                     # msg.position[i] = float(joint['position']) * factor + offset
                 # if has_velocity and 'velocity' in joint:
                 #     msg.velocity[i] = float(joint['velocity']) * factor
                 # if has_effort and 'effort' in joint:
                 #     msg.effort[i] = float(joint['effort'])
 
-            if msg.joint_names or msg.desired_positions:
+            if msg.joints or msg.goals:
                 # Only publish non-empty messages
                 self.pub.publish(msg)
 
