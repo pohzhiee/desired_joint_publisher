@@ -32,6 +32,7 @@ from python_qt_binding.QtWidgets import QGridLayout
 from python_qt_binding.QtWidgets import QScrollArea
 from python_qt_binding.QtWidgets import QSpinBox
 from python_qt_binding.QtWidgets import QWidget
+import ut_param_server
 
 RANGE = 10000
 
@@ -168,7 +169,9 @@ class DesiredJointPublisher():
         # for source in source_list:
         #     self.sources.append(self.node.create_subscription(sensor_msgs.msg.JointState, source, self.source_cb))
         # TODO: read robot name and make it work for generic robots
-        self.pub = self.node.create_publisher(ros2_control_interfaces.msg.JointControl, '/lobot/control')
+        robot_names = ut_param_server.getRobots(node)
+        self.robot_name = robot_names[0]
+        self.pub = self.node.create_publisher(ros2_control_interfaces.msg.JointControl, '/'+self.robot_name+'/control')
 
     def source_cb(self, msg):
         for i in range(len(msg.name)):

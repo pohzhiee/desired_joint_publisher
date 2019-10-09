@@ -5,10 +5,10 @@ package_name = 'desired_joint_publisher'
 
 setup(
     name=package_name,
-    version='0.1.0',
+    version='0.2.0',
     packages=[],
     py_modules=[
-        'desired_joint_publisher',
+        'desired_joint_publisher', 'ut_param_server'
     ],
     install_requires=['setuptools'],
     zip_safe=True,

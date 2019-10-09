@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["/home/pohzhiee/biped_ros2/install/lobot_description/share/lobot_description/robots/arm_standalone.urdf"],
+            "console": "integratedTerminal"
+        }
+    ]
+}
