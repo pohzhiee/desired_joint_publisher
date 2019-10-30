@@ -10,6 +10,11 @@ setup(
     py_modules=[
         'desired_joint_publisher', 'ut_param_server'
     ],
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
     install_requires=['setuptools'],
     zip_safe=True,
     author='Poh Zhi-Ee',
@@ -17,14 +22,14 @@ setup(
     keywords=['ROS', 'ROS2'],
     classifiers=[
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: Apache Software License',
+        'License :: MIT',
         'Programming Language :: Python',
         'Topic :: Software Development',
     ],
     description=(
         'A python node to publish `ros2_control_interfaces/msg/JointControl` messages for a robot described with URDF.'
     ),
-    license='Apache License, Version 2.0',
+    license='MIT',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [

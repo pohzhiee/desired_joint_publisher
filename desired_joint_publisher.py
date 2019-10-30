@@ -217,8 +217,6 @@ class DesiredJointPublisher():
         while rclpy.ok():
             start_time = time.time()
             msg = ros2_control_interfaces.msg.JointControl()
-            msg.header.stamp = clock.now().to_msg()
-
             if delta > 0:
                 self.update(delta)
 
@@ -499,7 +497,7 @@ def main(input_args=None):
     with open(parsed_args.urdf_file, 'r') as infp:
         urdf = infp.read()
 
-    node = rclpy.create_node('desired_state_publisher', allow_undeclared_parameters=True)
+    node = rclpy.create_node('desired_state_publisher', allow_undeclared_parameters=True, start_parameter_services=False)
     jsp = DesiredJointPublisher(node, urdf)
 
     if jsp.gui is None:

@@ -5,9 +5,9 @@
     This package contains a tool for setting and publishing joint state values for a given URDF.
   </description>
   <author email="zhiee.poh@httechnology.com">Poh Zhi-Ee</author>
-  <maintainer email="user@todo.todo">Todo</maintainer>
+  <maintainer email="zhiee.poh@httechnology.com">Poh Zhi-Ee</maintainer>
 
-  <license>BSD</license>
+  <license>MIT</license>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>python_qt_binding</exec_depend>
