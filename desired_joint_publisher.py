@@ -13,6 +13,7 @@ import xml.dom.minidom
 # ROS 2 imports
 import rclpy
 import rclpy.parameter
+import rclpy.qos
 import sensor_msgs.msg
 import ros2_control_interfaces.msg
 
@@ -168,10 +169,10 @@ class DesiredJointPublisher():
         self.sources = []
         # for source in source_list:
         #     self.sources.append(self.node.create_subscription(sensor_msgs.msg.JointState, source, self.source_cb))
-        # TODO: read robot name and make it work for generic robots
         robot_names = ut_param_server.getRobots(node)
         self.robot_name = robot_names[0]
-        self.pub = self.node.create_publisher(ros2_control_interfaces.msg.JointControl, '/'+self.robot_name+'/control')
+        self.pub = self.node.create_publisher(ros2_control_interfaces.msg.JointControl,
+                                              '/'+self.robot_name+'/control', rclpy.qos.qos_profile_sensor_data)
 
     def source_cb(self, msg):
         for i in range(len(msg.name)):
@@ -207,7 +208,7 @@ class DesiredJointPublisher():
             self.gui.sliderUpdateTrigger.emit()
 
     def loop(self):
-        hz = self.get_param('rate', 10)  # 10hz
+        hz = self.get_param('rate', 50)  # 10hz
 
         delta = 0.0
 
@@ -409,7 +410,7 @@ class DesiredJointPublisherGui(QWidget):
         joint_info['slidervalue'] = joint_info['slider'].value()
         joint = joint_info['joint']
         joint['position'] = self.sliderToValue(joint_info['slidervalue'], joint)
-        joint_info['display'].setText("%.2f" % joint['position'])
+        joint_info['display'].setText("%.6f" % joint['position'])
 
     @pyqtSlot()
     def updateSliders(self):
