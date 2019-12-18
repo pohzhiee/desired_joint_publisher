@@ -172,7 +172,7 @@ class DesiredJointPublisher():
         robot_names = ut_param_server.getRobots(node)
         self.robot_name = robot_names[0]
         self.pub = self.node.create_publisher(ros2_control_interfaces.msg.JointControl,
-                                              '/'+self.robot_name+'/control', rclpy.qos.qos_profile_sensor_data)
+                                              '/'+self.robot_name+'/control', rclpy.qos.qos_profile_services_default)
 
     def source_cb(self, msg):
         for i in range(len(msg.name)):
